@@ -1,0 +1,400 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f5f0;
+  --foreground: #1a1a1a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-washi: #f7f5f0;
+  --color-sumi: #1a1a1a;
+  --color-matcha: #7c8c5a;
+  --color-indigo: #2c4a6e;
+  --color-sakura: #d4a5a5;
+  --color-take: #3d5a4c;
+  --color-kuro: #0d0d0d;
+  --color-hai: #8a8a8a;
+  --color-usuzumi: #4a4a4a;
+  --color-usuzimi: #4a4a4a;
+  --color-usumi: #4a4a4a;
+  --color-shironeri: #fafaf8;
+
+  --font-sans: var(--font-noto-sans-jp), system-ui, sans-serif;
+  --font-zen: var(--font-zen-kaku), var(--font-noto-sans-jp), sans-serif;
+  --font-noto: var(--font-noto-sans-jp), system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-noto-sans-jp), system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(44, 74, 110, 0.16);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f7f5f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1a1a1a;
+}
+
+/* Hide scrollbar for category chips horizontal scroll */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth momentum scrolling on iOS */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Japanese pattern backgrounds */
+.pattern-seigaiha {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'%3E%3Cpath fill='none' stroke='%231A1A1A' stroke-width='0.5' opacity='0.08' d='M0 40a19.96 19.96 0 0 1 5.9-14.11 20.17 20.17 0 0 1 19.44-5.2A20 20 0 0 1 20.2 40H0zM40 40a20 20 0 0 1-14.11-5.9 19.96 19.96 0 0 1-5.2-19.44A20.17 20.17 0 0 1 40 20.2V40zM40 20.2a20.17 20.17 0 0 1 19.44 5.2A20 20 0 0 1 40 40V20.2zM80 40H59.8a20 20 0 0 1 5.2-19.44 19.96 19.96 0 0 1 14.11-5.9V40z'/%3E%3C/svg%3E");
+}
+
+.pattern-asanoha {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath fill='none' stroke='%231A1A1A' stroke-width='0.5' opacity='0.06' d='M24 0v48M0 24h48M0 0l48 48M48 0L0 48M12 0v24l12 12 12-12V0M12 48V24l12-12 12 12v24'/%3E%3C/svg%3E");
+}
+
+/* Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translateX(0);
+  }
+  50% {
+    transform: scale(1.1) translateX(-2%);
+  }
+  100% {
+    transform: scale(1) translateX(0);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-kenburns {
+  animation: kenburns 20s ease-in-out infinite;
+}
+
+/* Vertical text for Japanese aesthetic */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Custom focus states */
+.focus-jp:focus-visible {
+  outline: 2px solid #2c4a6e;
+  outline-offset: 2px;
+}
+
+/* Panel transitions */
+.panel-slide {
+  transform: translateY(10px) scale(0.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel-slide.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Card hover effect */
+.card-lift {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth image reveal */
+.img-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Scoped Japanese palette bridge for legacy utility-heavy pages */
+.jp-theme {
+  color: #1a1a1a;
+  font-family: var(--font-zen-kaku), var(--font-noto-sans-jp), system-ui, sans-serif;
+}
+
+.jp-theme .bg-white {
+  background-color: #fafaf8;
+}
+
+.jp-theme .bg-gray-50 {
+  background-color: #f3f1ea;
+}
+
+.jp-theme .bg-gray-100 {
+  background-color: #ebe7dd;
+}
+
+.jp-theme .bg-slate-900,
+.jp-theme .from-slate-900 {
+  background-color: #1a1a1a;
+}
+
+.jp-theme .bg-slate-700,
+.jp-theme .to-slate-700 {
+  background-color: #4a4a4a;
+}
+
+.jp-theme .bg-indigo-50 {
+  background-color: rgba(44, 74, 110, 0.1);
+}
+
+.jp-theme .bg-indigo-100 {
+  background-color: rgba(44, 74, 110, 0.16);
+}
+
+.jp-theme .bg-indigo-600 {
+  background-color: #2c4a6e;
+}
+
+.jp-theme .bg-indigo-700 {
+  background-color: #1f3650;
+}
+
+.jp-theme .text-gray-900 {
+  color: #1a1a1a;
+}
+
+.jp-theme .text-gray-800 {
+  color: #2b2b2b;
+}
+
+.jp-theme .text-gray-700 {
+  color: #4a4a4a;
+}
+
+.jp-theme .text-gray-600 {
+  color: #5c5c5c;
+}
+
+.jp-theme .text-gray-500,
+.jp-theme .text-gray-400 {
+  color: #8a8a8a;
+}
+
+.jp-theme .text-indigo-700,
+.jp-theme .text-indigo-600,
+.jp-theme .text-indigo-500 {
+  color: #2c4a6e;
+}
+
+.jp-theme .border-gray-100,
+.jp-theme .border-gray-200,
+.jp-theme .ring-gray-200 {
+  border-color: rgba(26, 26, 26, 0.12);
+}
+
+.jp-theme .border-indigo-500,
+.jp-theme .border-indigo-400,
+.jp-theme .border-indigo-200,
+.jp-theme .border-indigo-100 {
+  border-color: rgba(44, 74, 110, 0.35);
+}
+
+.jp-theme .ring-black\/5 {
+  --tw-ring-color: rgba(26, 26, 26, 0.08);
+}
+
+.jp-theme .ring-indigo-500 {
+  --tw-ring-color: rgba(44, 74, 110, 0.5);
+}
+
+.jp-theme .ring-indigo-100 {
+  --tw-ring-color: rgba(44, 74, 110, 0.16);
+}
+
+.jp-theme .hover\:bg-indigo-700:hover {
+  background-color: #1f3650;
+}
+
+.jp-theme .hover\:bg-indigo-100:hover {
+  background-color: rgba(44, 74, 110, 0.2);
+}
+
+.jp-theme .hover\:bg-indigo-50:hover {
+  background-color: rgba(44, 74, 110, 0.12);
+}
+
+.jp-theme .hover\:text-indigo-600:hover {
+  color: #2c4a6e;
+}
+
+.jp-theme .hover\:ring-indigo-200:hover {
+  --tw-ring-color: rgba(44, 74, 110, 0.28);
+}
+
+.jp-theme .focus\:border-indigo-400:focus {
+  border-color: rgba(44, 74, 110, 0.45);
+}
+
+.jp-theme .focus\:ring-indigo-400:focus {
+  --tw-ring-color: rgba(44, 74, 110, 0.45);
+}
+
+.jp-theme .focus\:ring-indigo-100:focus {
+  --tw-ring-color: rgba(44, 74, 110, 0.16);
+}
+
+.jp-theme .active\:bg-indigo-200:active {
+  background-color: rgba(44, 74, 110, 0.24);
+}
+
+.jp-theme .active\:bg-indigo-700:active {
+  background-color: #1f3650;
+}
+
+.jp-theme .from-indigo-50 {
+  --tw-gradient-from: #f7f5f0 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgba(247, 245, 240, 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.jp-theme .via-white {
+  --tw-gradient-to: rgba(250, 250, 248, 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #fafaf8 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.jp-theme .to-sky-50 {
+  --tw-gradient-to: #f0ede2 var(--tw-gradient-to-position);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-slide-up,
+  .animate-fade-in,
+  .animate-marquee,
+  .animate-pulse-soft,
+  .animate-kenburns {
+    animation: none;
+  }
+
+  .card-lift,
+  .panel-slide {
+    transition: none;
+  }
+}
+
+/* Ensure safe area on iOS for bottom nav */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
