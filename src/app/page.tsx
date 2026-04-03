@@ -93,7 +93,7 @@ function statusClasses(status: string) {
 }
 
 export default function HomePage() {
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<PanelState>(null);
   const [panelFilter, setPanelFilter] = useState("all");
   const [katalogFilter, setKatalogFilter] = useState("all");
@@ -156,10 +156,10 @@ export default function HomePage() {
         aria-label="Toggle quick navigation"
       >
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-sumi text-washi shadow-lg transition-colors hover:bg-usuzumi">
-          {menuOpen ? <Menu size={18} /> : <X size={18} />}
+          {menuOpen ? <X size={18} /> : <Menu size={18} />}
         </span>
         <span className="hidden text-[10px] uppercase tracking-[0.22em] text-hai md:block">
-          {menuOpen ? "Menu" : "Close"}
+          {menuOpen ? "Close" : "Menu"}
         </span>
       </button>
 

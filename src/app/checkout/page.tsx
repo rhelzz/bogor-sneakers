@@ -105,15 +105,26 @@ interface FormErrors {
   paymentMethod?: string;
 }
 
+type CheckoutSource = "cart" | "design";
+
 // -- Component -----------------------------------------------------------------
 export default function CheckoutPage() {
   const router = useRouter();
-  const [designPrice] = useState<number | null>(() => {
-    if (typeof window === "undefined") return null;
+  const [checkoutParams] = useState<{ subtotal: number | null; source: CheckoutSource }>(() => {
+    if (typeof window === "undefined") {
+      return { subtotal: null, source: "design" };
+    }
     const params = new URLSearchParams(window.location.search);
     const total = Number(params.get("total"));
-    return total > 0 ? total : null;
+    const source = params.get("source") === "cart" ? "cart" : "design";
+    return {
+      subtotal: total > 0 ? total : null,
+      source,
+    };
   });
+  const orderSubtotal = checkoutParams.subtotal;
+  const checkoutSource = checkoutParams.source;
+  const fromCart = checkoutSource === "cart";
 
   const [form, setForm] = useState<FormData>({
     name: "", email: "", phone: "",
@@ -166,7 +177,7 @@ export default function CheckoutPage() {
 
   const shippingCost = jneServices?.find((s) => s.id === selectedService)?.price ?? null;
   const selectedSvc  = jneServices?.find((s) => s.id === selectedService) ?? null;
-  const grandTotal   = (designPrice ?? 0) + (shippingCost ?? 0);
+  const grandTotal   = (orderSubtotal ?? 0) + (shippingCost ?? 0);
 
   const validate = () => {
     const e: FormErrors = {};
@@ -230,12 +241,17 @@ export default function CheckoutPage() {
         {/* Header */}
         <div className="mb-6 flex items-center gap-3">
           <button
-            onClick={() => router.back()}
+            onClick={() => (fromCart ? router.push("/cart") : router.back())}
             className="flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs font-medium text-gray-600 shadow-sm ring-1 ring-black/5 hover:text-indigo-600"
           >
             <ChevronLeft size={14} /> Kembali
           </button>
-          <h1 className="font-zen text-lg font-extrabold text-gray-900">Data Pengiriman &amp; Pembayaran</h1>
+          <h1 className="font-zen text-lg font-extrabold text-gray-900">Checkout Pengiriman &amp; Pembayaran</h1>
+          {fromCart && (
+            <span className="rounded-full bg-matcha/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-matcha">
+              Dari Cart
+            </span>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
@@ -433,10 +449,10 @@ export default function CheckoutPage() {
                   <span className="text-xs font-bold uppercase tracking-widest text-indigo-400">Ringkasan Biaya</span>
                 </div>
                 <div className="flex flex-col gap-2 text-sm">
-                  {designPrice !== null && (
+                  {orderSubtotal !== null && (
                     <div className="flex items-center justify-between text-gray-700">
-                      <span>Harga Desain &amp; Sepatu</span>
-                      <span className="font-semibold">Rp {designPrice.toLocaleString("id-ID")}</span>
+                      <span>{fromCart ? "Subtotal Belanja" : "Harga Desain &amp; Sepatu"}</span>
+                      <span className="font-semibold">Rp {orderSubtotal.toLocaleString("id-ID")}</span>
                     </div>
                   )}
                   <div className="flex items-center justify-between text-gray-700">
@@ -446,7 +462,7 @@ export default function CheckoutPage() {
                   <div className="mt-1 flex items-center justify-between border-t border-indigo-200 pt-2">
                     <span className="font-bold text-gray-800">Total Pembayaran</span>
                     <span className="text-lg font-black text-indigo-700">
-                      Rp {(designPrice !== null ? grandTotal : shippingCost).toLocaleString("id-ID")}
+                      Rp {(orderSubtotal !== null ? grandTotal : shippingCost).toLocaleString("id-ID")}
                     </span>
                   </div>
                 </div>

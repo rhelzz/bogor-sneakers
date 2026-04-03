@@ -2,7 +2,7 @@
 name: frontend-expert
 description: "Senior Frontend Architect & UI/UX Designer. Expert in Next.js 16+ (App Router), React 19, Tailwind CSS v4, TypeScript, and modern web architecture. Use when: building UI components, implementing features, optimizing performance, or designing user experiences. Specialized for production-grade frontend development with strong accessibility (a11y) and responsive design focus."
 version: 1.0
-modelPreference: gpt-5-3-codex-xhigh
+modelPreference: gpt-5-3-codex-xhigh / claude-haiku-4.5
 applyTo: "src/**/*.{tsx,ts,css}"
 ---
 
