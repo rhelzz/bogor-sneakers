@@ -1,19 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_JP, Zen_Kaku_Gothic_New } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import TopNavbar from "@/components/TopNavbar";
 import BottomNavigationBar from "@/components/BottomNavigationBar";
 
-const notoSans = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-});
-
-const zenKaku = Zen_Kaku_Gothic_New({
-  variable: "--font-zen-kaku",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${notoSans.variable} ${zenKaku.variable} antialiased bg-washi text-sumi`}>
+      <body className={`${poppins.variable} antialiased bg-washi text-sumi`}>
         {/* Desktop top navbar — hidden on mobile */}
         <TopNavbar />
 

@@ -22,15 +22,15 @@
   --color-usumi: #4a4a4a;
   --color-shironeri: #fafaf8;
 
-  --font-sans: var(--font-noto-sans-jp), system-ui, sans-serif;
-  --font-zen: var(--font-zen-kaku), var(--font-noto-sans-jp), sans-serif;
-  --font-noto: var(--font-noto-sans-jp), system-ui, sans-serif;
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-zen: var(--font-poppins), system-ui, sans-serif;
+  --font-noto: var(--font-poppins), system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-noto-sans-jp), system-ui, sans-serif;
+  font-family: var(--font-poppins), system-ui, sans-serif;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }

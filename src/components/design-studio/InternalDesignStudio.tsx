@@ -21,6 +21,7 @@ import {
 import NextImage from "next/image";
 
 const CANVAS_SIZE = 1000;
+const PREVIEW_OFFSET_Y = -25;
 const MODEL_COUNT = 8;
 const MAX_LAYER_SCAN = 12;
 const ASSET_FOLDER = "CASUAL HIGH";
@@ -200,6 +201,7 @@ export default function InternalDesignStudio() {
   const [activeElementId, setActiveElementId] = useState<string | null>(null);
 
   const [viewerWidth, setViewerWidth] = useState(520);
+  const previewOffsetY = PREVIEW_OFFSET_Y;
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -288,19 +290,19 @@ export default function InternalDesignStudio() {
           CANVAS_SIZE,
           CANVAS_SIZE,
         );
-        ctx.drawImage(outlineLayer, 0, 0);
+        ctx.drawImage(outlineLayer, 0, previewOffsetY);
       }
 
       const fillLayer = drawFilledLayer(image, layerColors[id] ?? "#ffffff", CANVAS_SIZE, CANVAS_SIZE);
-      ctx.drawImage(fillLayer, 0, 0);
+      ctx.drawImage(fillLayer, 0, previewOffsetY);
     }
 
     if (baseImageRef.current) {
       ctx.globalCompositeOperation = "multiply";
-      ctx.drawImage(baseImageRef.current, 0, 0, CANVAS_SIZE, CANVAS_SIZE);
+      ctx.drawImage(baseImageRef.current, 0, previewOffsetY, CANVAS_SIZE, CANVAS_SIZE);
       ctx.globalCompositeOperation = "source-over";
     }
-  }, [layerIds, layerOutlines, layerColors]);
+  }, [layerIds, layerOutlines, layerColors, previewOffsetY]);
 
   const scheduleDraw = useCallback(() => {
     if (drawFrameRef.current !== null) {
@@ -1011,7 +1013,7 @@ export default function InternalDesignStudio() {
         }
 
         hitCtx.clearRect(0, 0, 1, 1);
-        hitCtx.drawImage(image, -x, -y, CANVAS_SIZE, CANVAS_SIZE);
+        hitCtx.drawImage(image, -x, previewOffsetY - y, CANVAS_SIZE, CANVAS_SIZE);
         const alpha = hitCtx.getImageData(0, 0, 1, 1).data[3];
         if (alpha > 20) {
           setActiveLayerPickId(id);
@@ -1025,7 +1027,7 @@ export default function InternalDesignStudio() {
         }
       }
     },
-    [layerIds, layerColors, showToast],
+    [layerIds, layerColors, showToast, previewOffsetY],
   );
 
   const handlePointerMove = useCallback((event: PointerEvent) => {
